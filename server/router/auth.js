@@ -72,6 +72,10 @@ router.post('/signin', async (req, res) => {
         if (userLogin) {
             const checkPassword = await bcrypt.compare(password, userLogin.password);
             token = await userLogin.generateAuthToken();
+            res.cookie("jwttoken", token, {
+                expires: new Date(Date.now() + 25892000000),
+                httpOnly: true
+            });
             if (!checkPassword) {
                 res.status(400).json({ error: "invalid Password" })
             } else {
