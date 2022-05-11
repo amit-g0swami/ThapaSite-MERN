@@ -9,6 +9,8 @@ const port = process.env.PORT || 8001;
 
 // db config
 require("./db/connection");
+app.use(express.json());
+app.use(require("./router/auth"));
 
 // middleware
 const middleware = (req, res, next) => {
@@ -18,25 +20,9 @@ const middleware = (req, res, next) => {
 }
 
 // api endpoints
-app.get("/", (req, res) => {
-    res.send("hello")
-})
-
-app.get("/about", middleware, (req, res) => {
-    res.send("about")
-})
-
-app.get("/contact", (req, res) => {
-    res.send("contact")
-})
-
-app.get("/signin", (req, res) => {
-    res.send("signin")
-})
-
-app.get("/signup", (req, res) => {
-    res.send("signup")
-})
+// app.get("/", (req, res) => {
+//     res.send("hello")
+// })
 
 // listners
 app.listen(port, () => {
