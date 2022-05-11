@@ -50,4 +50,25 @@ router.post("/register", async (req, res) => {
     }
 })
 
+// login route 
+router.post('/signin', async (req, res) => {
+    // console.log(req.body)
+    // res.status(200).json({ "user": "logged in" })
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            res.status(400).json({ "user": "fill the data" })
+        }
+        const userLogin = await User.findOne({ email: email });
+        if (!userLogin) {
+            res.status(400).json({ "user": "bad request" })
+        } else {
+            res.json({ "user": "user signin successfully" })
+        }
+    } catch (err) {
+        console.log(err)
+    }
+})
+
+
 module.exports = router;
