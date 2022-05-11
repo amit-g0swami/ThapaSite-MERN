@@ -31,18 +31,24 @@ router.get("/", (req, res) => {
 
 // using async await 
 router.post("/register", async (req, res) => {
-    const { name, email, phone, work, password } = req.body;
+    const { name, email, phone, work, password, cpassword } = req.body;
 
-    if (!name || !email || !phone || !work || !password) { return res.status(422).json({ "error": "plz fill the form" }) }
+    if (!name || !email || !phone || !work || !password || !cpassword) { return res.status(422).json({ "error": "plz fill the form" }) }
 
     try {
         const userExist = await User.findOne({ email: email });
         if (userExist) {
             return res.status(422).json({ "error": "Email already exist" })
+        } else if (password !== cpassword) {
+            return res.status(422).json({ "error": "Password does't matched" })
         }
-        const user = new User({ name, email, phone, work, password });
-        const userRegister = await user.save();
-        if (userRegister) {
+        else {
+            const user = new User({ name, email, phone, work, password, cpassword });
+            // const userRegister = await user.save();
+            // if (userRegister) {
+            //     res.status(201).json({ "message": "Data pushed successfully" })
+            // }
+            await user.save();
             res.status(201).json({ "message": "Data pushed successfully" })
         }
     } catch (err) {
