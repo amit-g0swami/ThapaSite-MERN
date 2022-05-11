@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcryptjs");
 
 require("../db/connection");
 const User = require("../model/userSchema");
@@ -66,10 +67,15 @@ router.post('/signin', async (req, res) => {
             res.status(400).json({ "user": "fill the data" })
         }
         const userLogin = await User.findOne({ email: email });
-        if (!userLogin) {
-            res.status(400).json({ "user": "bad request" })
+        if (userLogin) {
+            const checkPassword = await bcrypt.compare(password, userLogin.password);
+            if (!checkPassword) {
+                res.status(400).json({ error: "invalid Password" })
+            } else {
+                res.json({ "user": "user signin successfully" })
+            }
         } else {
-            res.json({ "user": "user signin successfully" })
+            res.status(400).json({ error: "user not exist" })
         }
     } catch (err) {
         console.log(err)
