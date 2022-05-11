@@ -3,14 +3,14 @@ const dotenv = require("dotenv");
 
 dotenv.config({ path: "./config.env" });
 
-// app config 
+// app config
 const app = express();
 const port = process.env.PORT || 8001;
 
 // db config
 require("./db/connection");
 
-// middleware 
+// middleware
 const middleware = (req, res, next) => {
     const user = "user";
     if (user != "") next();
@@ -42,4 +42,5 @@ app.get("/signup", (req, res) => {
 app.listen(port, () => {
     console.log(`server is running at ${port}`)
 })
+
 
