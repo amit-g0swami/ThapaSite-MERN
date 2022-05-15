@@ -93,6 +93,16 @@ router.post('/signin', async (req, res) => {
 // about  
 router.get('/about', middleware, (req, res) => {
     res.send(req.userData);
-})
+});
+
+// contact
+router.get('/contact', middleware, (req, res) => {
+    res.send(req.userData);
+});
+
+//home
+router.get('/home', middleware, (req, res) => {
+    res.send(req.userData);
+});
 
 module.exports = router;

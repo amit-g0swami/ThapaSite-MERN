@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function About() {
     const navigate = useNavigate();
-    const [userdata, setUserdata] = useState()
+    const [userdata, setUserdata] = useState();
     useEffect(() => {
         const getUserData = async () => {
             try {
@@ -31,10 +31,10 @@ function About() {
     }, [])
 
     return (
-        <div className="about" style={{ display: "flex", alignItems: "center", padding: "20px", justifyContent: "center" }}>
+        <div className="about" style={{ display: "flex", alignItems: "center", padding: "100px", justifyContent: "center" }}>
             <div className="about__userProfile">
-                <div class="card" style={{ width: "18rem", height: "393px" }}>
-                    <img src="http://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Download-Image.png" class="card-img-top" alt="..." style={{ height: "183px" }} />
+                <div class="card" style={{ width: "18rem", height: "393px", display: "flex", alignItems: "center", padding: "10px" }}>
+                    <img src="https://pluspng.com/img-png/png-user-icon-person-icon-png-people-person-user-icon-2240.png" class="card-img-top" alt="..." style={{ width: "100px", height: "100px" }} />
                     <div class="card-body">
                         <h5 class="card-title">{userdata?.name}</h5>
                         <p class="card-text">{userdata?.work}</p>
