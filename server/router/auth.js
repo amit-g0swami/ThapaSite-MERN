@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const middleware = require("../middleware/middleware");
 
 require("../db/connection");
 const User = require("../model/userSchema");
@@ -89,5 +90,9 @@ router.post('/signin', async (req, res) => {
     }
 })
 
+// about  
+router.get('/about', middleware, (req, res) => {
+    res.send(req.userData);
+})
 
 module.exports = router;
