@@ -96,13 +96,34 @@ router.get('/about', middleware, (req, res) => {
 });
 
 // contact
-router.get('/contact', middleware, (req, res) => {
-    res.send(req.userData);
+router.post('/contact', middleware, async (req, res) => {
+    try {
+        const { name, email, phone, message } = req.body;
+        if (!name || !email || !phone || !message) {
+            console.log("error")
+            res.status(400).json({ "user": "fill the form" })
+        }
+        const userContact = await User.findOne({ _id: req.userID });
+        if (userContact) {
+            const userMessage = await userContact.addMessage(name, email, phone, message);
+            await userContact.save();
+            res.status(200).json({ message: "message pushed" })
+        }
+
+    } catch (err) {
+        console.log(err)
+    }
 });
 
 //home
 router.get('/home', middleware, (req, res) => {
     res.send(req.userData);
+});
+
+// logout  
+router.get('/logout', (req, res) => {
+    res.clearCookie("jwttoken", { path: "/" })
+    res.status(200).send("logout");
 });
 
 module.exports = router;

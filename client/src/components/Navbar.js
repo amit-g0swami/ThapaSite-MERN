@@ -1,8 +1,33 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "bootstrap/dist/css/bootstrap.css";
 import { Link } from 'react-router-dom';
 
 function Navbar() {
+    const [userdata, setUserdata] = useState();
+    useEffect(() => {
+        const getUserData = async () => {
+            try {
+                const res = await fetch("/home", {
+                    method: "GET",
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json"
+                    },
+                    credentials: "include"
+                })
+                const data = await res.json();
+                console.log(data);
+                setUserdata(data);
+                if (!res.status === 200) {
+                    const error = new Error(res.error);
+                    throw error
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        getUserData();
+    }, [])
     return (
         <div style={{ padding: "10px" }}>
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style={{ padding: "10px" }}>
@@ -21,12 +46,20 @@ function Navbar() {
                         <li class="nav-item">
                             <Link className="nav-link" to="/contact">Contact</Link>
                         </li>
-                        <li class="nav-item">
-                            <Link className="nav-link" to="/login">Login</Link>
-                        </li>
-                        <li class="nav-item">
-                            <Link className="nav-link" to="/signup">Registration</Link>
-                        </li>
+                        {
+                            userdata?.name ? <>
+                                <li class="nav-item">
+                                    <Link className="nav-link" to="/logout">Logout</Link>
+                                </li>
+                            </> : <>
+                                <li class="nav-item">
+                                    <Link className="nav-link" to="/login">Login</Link>
+                                </li>
+                                <li class="nav-item">
+                                    <Link className="nav-link" to="/signup">Registration</Link>
+                                </li>
+                            </>
+                        }
                     </ul>
                 </div>
             </nav>
