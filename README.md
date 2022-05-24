@@ -6,10 +6,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-## Live Demo
-
-[Live Demo Click Here 🚀🚀](https://clonemern-ddea3.web.app/)
-
 ### `npm start`
 
 Runs the app in the development mode.\
